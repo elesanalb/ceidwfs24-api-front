@@ -52,10 +52,64 @@ function nuevaTarea(tarea){
     });
 }
 
+
+
+function borrarTarea(id){
+    return new Promise(async (ok, ko) => {
+        const conexion = conectar();
+        try{
+            let {count} = await conexion`DELETE FROM tareas WHERE id = ${id}`;
+
+            conexion.end();
+
+            ok(count);
+
+        }catch(error){
+            ko({ error : "error en base de datos" });
+        }
+    });
+}
+
+
+
+function actualizarEstado(id){
+    return new Promise(async (ok, ko) => {
+        const conexion = conectar();
+        try{
+            let {count} = await conexion`UPDATE tareas SET terminada = NOT terminada WHERE id = ${id}`;
+
+            conexion.end();
+
+            ok(count);
+
+        }catch(error){
+            ko({ error : "error en base de datos" });
+        }
+    });
+}
+
+
+function actualizarTexto(id, texto){
+    return new Promise(async (ok, ko) => {
+        const conexion = conectar();
+        try{
+            let {count} = await conexion`UPDATE tareas SET tarea = ${texto} WHERE id = ${id}`;
+
+            conexion.end();
+
+            ok(count);
+
+        }catch(error){
+            ko({ error : "error en base de datos" });
+        }
+    });
+}
+
+module.exports = {leerTareas,nuevaTarea,borrarTarea,actualizarEstado,actualizarTexto};
+
+
 /*
 leerTareas("otra tarea")
 .then(x => console.log(x))
 .catch(x => console.log(x));
 */
-
-module.exports = {leerTareas, nuevaTarea};
