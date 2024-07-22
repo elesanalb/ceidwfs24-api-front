@@ -89,7 +89,7 @@ server.put("/tareas/actualizar/:operacion(1|2)/:id([0-9]+)", async (peticion, re
 
 
 // metodo DELETE
-server.delete("/tareas/borrar/:id([0-9]+)", (peticion, respuesta) => {
+server.delete("/tareas/borrar/:id([0-9]+)", async (peticion, respuesta) => {
     try{
         let cantidad = await borrarTarea(peticion.params.id);
 
